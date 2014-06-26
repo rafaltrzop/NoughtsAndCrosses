@@ -1,5 +1,7 @@
 CC = gcc
 
+all: bin/NoughtsAndCrosses.exe
+
 bin/NoughtsAndCrosses.exe: obj/main.o
 	$(CC) $^ -o $@
 
@@ -9,4 +11,4 @@ obj/main.o: src/main.c
 clean:
 	rm -f bin/*.exe obj/*.o
 
-.PHONY: clean
+.PHONY: all clean
