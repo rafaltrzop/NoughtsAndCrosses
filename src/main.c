@@ -85,10 +85,46 @@ int main(void)
 	}
 }
 
-void onePlayer(void) {
-	printf("One player\n");
+void onePlayer(void)
+{
+	printf("   | :::: DIFFICULTY LEVEL :::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+         "   ==============================================================================\n"
+         "   |                                                                            |\n"
+         "   |   1. Easy                                                                  |\n"
+         "   |   2. Medium                                                                |\n"
+         "   |   3. Hard                                                                  |\n"
+         "   |                                                                            |\n");
+
+	int difficultyLevel ;
+	do {
+		printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+		while(!scanf("%d", &difficultyLevel)) getchar(); /* in case you type some letters */
+	} while(difficultyLevel != 1 && difficultyLevel != 2 && difficultyLevel != 3);
+	printf("   |                                                                            |\n"
+	       "   ==============================================================================\n");
+
+
+
+
 }
 
-void twoPlayers(void) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void twoPlayers(void)
+{
 	printf("Two players\n");
 }
