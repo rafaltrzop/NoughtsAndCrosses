@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h> /* for srand() in drawing() */
+#include <time.h> /* for time() in drawing() */
 
-void onePlayer(void);
-void twoPlayers(void);
+void singleplayer(int difficultyLevel);
+void multiplayer(void);
+int drawing(void);
 
 int main(void)
 {
@@ -76,55 +79,66 @@ int main(void)
 		printf("   |                                                                            |\n"
 		       "   ==============================================================================\n");
 
-		if(numberOfPlayers == 2)
-			twoPlayers();
-		else
-			onePlayer();
+		/* =================== DIFFICULTY LEVEL ==================== */
 
+		if(numberOfPlayers == 2)
+			multiplayer();
+		else {
+			printf("   | :::: DIFFICULTY LEVEL :::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+             "   ==============================================================================\n"
+             "   |                                                                            |\n"
+             "   |   1. Easy                                                                  |\n"
+             "   |   2. Medium                                                                |\n"
+             "   |   3. Hard                                                                  |\n"
+             "   |                                                                            |\n");
+
+			int difficultyLevel ;
+			do {
+				printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+				while(!scanf("%d", &difficultyLevel)) getchar(); /* in case you type some letters */
+			} while(difficultyLevel != 1 && difficultyLevel != 2 && difficultyLevel != 3);
+			printf("   |                                                                            |\n"
+			       "   ==============================================================================\n");
+
+			singleplayer(difficultyLevel);
+		}
 		return 0;
 	}
 }
 
-void onePlayer(void)
+void singleplayer(int difficultyLevel)
 {
-	printf("   | :::: DIFFICULTY LEVEL :::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+	int startingPlayer = drawing();
+	printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
          "   ==============================================================================\n"
          "   |                                                                            |\n"
-         "   |   1. Easy                                                                  |\n"
-         "   |   2. Medium                                                                |\n"
-         "   |   3. Hard                                                                  |\n"
-         "   |                                                                            |\n");
-
-	int difficultyLevel ;
-	do {
-		printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		while(!scanf("%d", &difficultyLevel)) getchar(); /* in case you type some letters */
-	} while(difficultyLevel != 1 && difficultyLevel != 2 && difficultyLevel != 3);
-	printf("   |                                                                            |\n"
-	       "   ==============================================================================\n");
-
-
-
+         "   |   Let's flip a coin:                                                       |\n"
+         "   |   PLAYER %d starts the game!                                                |\n"
+         "   |                                                                            |\n"
+         "   |                                   |     |                                  |\n"
+         "   |                                1  |  2  |  3                               |\n"
+         "   |                              _____|_____|_____                             |\n"
+         "   |                                   |     |                                  |\n"
+         "   |                                4  |  5  |  6                               |\n"
+         "   |                              _____|_____|_____                             |\n"
+         "   |                                   |     |                                  |\n"
+         "   |                                7  |  8  |  9                               |\n"
+         "   |                                   |     |                                  |\n"
+         "   |                                                                            |\n"
+         "   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", startingPlayer);
+	int field;
+	scanf("%d", &field);
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void twoPlayers(void)
+//to do
+void multiplayer(void)
 {
-	printf("Two players\n");
+	printf("multi\n");
+}
+
+int drawing(void)
+{
+	srand(time(NULL));
+	return rand()%101 < 50 ? 1 : 2;
 }
