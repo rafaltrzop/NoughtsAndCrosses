@@ -34,7 +34,7 @@ int main(void)
          "   |                                                                            |\n"
          "   ==============================================================================\n");
 
-	/* =================== MENU ==================== */
+	/* =================== MAIN MENU ==================== */
 
 	printf("   |      MENU                                                                  |\n"
          "   ==============================================================================\n"
@@ -46,7 +46,7 @@ int main(void)
 	int menuChoice;
 	do {
 		printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		scanf("%d", &menuChoice);
+		while(!scanf("%d", &menuChoice)) getchar(); /* in case you type some letters */
 	} while(menuChoice != 1 && menuChoice != 2);
 	printf("   |                                                                            |\n"
 	       "   ==============================================================================\n");
