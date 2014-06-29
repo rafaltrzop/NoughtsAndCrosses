@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h> /* for srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
+#include <string.h> /* for menuChoose */
+
+#define OPTION_MAX_LENGTH 40
+
+void printLogo(void);
+void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int arraySize);
 
 void singleplayer(int difficultyLevel);
 void multiplayer(void);
@@ -10,97 +16,29 @@ int checkWinner(void);
 
 int main(void)
 {
-    /* =================== LOGO ==================== */
-
-    /* ASCII Generator http://www.network-science.de/ascii/ (font: kban) */
-    printf("\n"
-           "   ==============================================================================\n"
-           "   |                                                                            |\n"
-           "   |                                                                            |\n"
-           "   |                                                                            |\n"
-           "   |          '|.   '|'                          '||        .                   |\n"
-           "   |           |'|   |    ...   ... ...    ... .  || ..   .||.   ....           |\n"
-           "   |           | '|. |  .|  '|.  ||  ||   || ||   ||' ||   ||   ||. '           |\n"
-           "   |           |   |||  ||   ||  ||  ||    |''    ||  ||   ||   . '|..          |\n"
-           "   |          .|.   '|   '|..|'  '|..'|.  '||||. .||. ||.  '|.' |'..|'          |\n"
-           "   |                                     .|....'                                |\n"
-           "   |                                                                            |\n"
-           "   |                                               '||                          |\n"
-           "   |                          ....   .. ...      .. ||                          |\n"
-           "   |                         '' .||   ||  ||   .'  '||                          |\n"
-           "   |                         .|' ||   ||  ||   |.   ||                          |\n"
-           "   |                         '|..'|' .||. ||.  '|..'||.                         |\n"
-           "   |                                                                            |\n"
-           "   |                                                                            |\n"
-           "   |             ..|'''.|                                                       |\n"
-           "   |           .|'     '  ... ..    ...    ....   ....    ....   ....           |\n"
-           "   |           ||          ||' '' .|  '|. ||. '  ||. '  .|...|| ||. '           |\n"
-           "   |           '|.      .  ||     ||   || . '|.. . '|.. ||      . '|..          |\n"
-           "   |            ''|....'  .||.     '|..|' |'..|' |'..|'  '|...' |'..|'          |\n"
-           "   |                                                                            |\n"
-           "   |                                                                            |\n"
-           "   |                                                                            |\n"
-           "   ==============================================================================\n");
-
-    /* =================== MAIN MENU ==================== */
-
-    printf("   | :::: MAIN MENU ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-           "   ==============================================================================\n"
-           "   |                                                                            |\n"
-           "   |   1. Play                                                                  |\n"
-           "   |   2. Quit                                                                  |\n"
-           "   |                                                                            |\n");
+    printLogo();
 
     int mainMenuChoice;
-    do {
-        printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-        while(!scanf("%d", &mainMenuChoice)) getchar(); /* in case you type some letters */
-    } while(mainMenuChoice != 1 && mainMenuChoice != 2);
-    printf("   |                                                                            |\n"
-           "   ==============================================================================\n");
+    char mainMenuOptions[][OPTION_MAX_LENGTH] = {"1. Play", "2. Quit"};
+    menuSelection(&mainMenuChoice, "MAIN MENU", mainMenuOptions, 2);
 
     if(mainMenuChoice == 2) {
         printf("\n");
         return 0;
     } else {
 
-        /* =================== NUMBER OF PLAYERS ==================== */
-
-        printf("   | :::: NUMBER OF PLAYERS ::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-               "   ==============================================================================\n"
-               "   |                                                                            |\n"
-               "   |   1. One player (play with computer)                                       |\n"
-               "   |   2. Two players (play with friend)                                        |\n"
-               "   |                                                                            |\n");
-
-        int numberOfPlayers;
-        do {
-            printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-            while(!scanf("%d", &numberOfPlayers)) getchar(); /* in case you type some letters */
-        } while(numberOfPlayers != 1 && numberOfPlayers != 2);
-        printf("   |                                                                            |\n"
-               "   ==============================================================================\n");
+    int numberOfPlayers;
+    char numberOfPlayersOptions[][OPTION_MAX_LENGTH] = {"1. One player (play with computer)", "2. Two players (play with friend)"};
+    menuSelection(&numberOfPlayers, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
 
         /* =================== DIFFICULTY LEVEL ==================== */
 
         if(numberOfPlayers == 2)
             multiplayer();
         else {
-            printf("   | :::: DIFFICULTY LEVEL :::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-                   "   ==============================================================================\n"
-                   "   |                                                                            |\n"
-                   "   |   1. Easy                                                                  |\n"
-                   "   |   2. Medium                                                                |\n"
-                   "   |   3. Hard                                                                  |\n"
-                   "   |                                                                            |\n");
-
-            int difficultyLevel ;
-            do {
-                printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-                while(!scanf("%d", &difficultyLevel)) getchar(); /* in case you type some letters */
-            } while(difficultyLevel != 1 && difficultyLevel != 2 && difficultyLevel != 3);
-            printf("   |                                                                            |\n"
-                   "   ==============================================================================\n");
+            int difficultyLevel;
+            char difficultyLevelOptions[][OPTION_MAX_LENGTH] = {"1. Easy", "2. Medium", "3. Hard"};
+            menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
 
             singleplayer(difficultyLevel);
         }
@@ -130,7 +68,7 @@ void multiplayer(void)
 
     int i;
     int field;
-    char board[9] = "         ";
+    char board[9] = "         "; /* nine spaces, one for each field */
 
     for(i = 0; i < 9; i++)
     {
@@ -174,6 +112,71 @@ void multiplayer(void)
                "   ==============================================================================\n");
 }
 
+void printLogo(void)
+{
+    /* ASCII Generator http://www.network-science.de/ascii/ (font: kban) */
+    printf("\n"
+           "   ==============================================================================\n"
+           "   |                                                                            |\n"
+           "   |                                                                            |\n"
+           "   |                                                                            |\n"
+           "   |          '|.   '|'                          '||        .                   |\n"
+           "   |           |'|   |    ...   ... ...    ... .  || ..   .||.   ....           |\n"
+           "   |           | '|. |  .|  '|.  ||  ||   || ||   ||' ||   ||   ||. '           |\n"
+           "   |           |   |||  ||   ||  ||  ||    |''    ||  ||   ||   . '|..          |\n"
+           "   |          .|.   '|   '|..|'  '|..'|.  '||||. .||. ||.  '|.' |'..|'          |\n"
+           "   |                                     .|....'                                |\n"
+           "   |                                                                            |\n"
+           "   |                                               '||                          |\n"
+           "   |                          ....   .. ...      .. ||                          |\n"
+           "   |                         '' .||   ||  ||   .'  '||                          |\n"
+           "   |                         .|' ||   ||  ||   |.   ||                          |\n"
+           "   |                         '|..'|' .||. ||.  '|..'||.                         |\n"
+           "   |                                                                            |\n"
+           "   |                                                                            |\n"
+           "   |             ..|'''.|                                                       |\n"
+           "   |           .|'     '  ... ..    ...    ....   ....    ....   ....           |\n"
+           "   |           ||          ||' '' .|  '|. ||. '  ||. '  .|...|| ||. '           |\n"
+           "   |           '|.      .  ||     ||   || . '|.. . '|.. ||      . '|..          |\n"
+           "   |            ''|....'  .||.     '|..|' |'..|' |'..|'  '|...' |'..|'          |\n"
+           "   |                                                                            |\n"
+           "   |                                                                            |\n"
+           "   |                                                                            |\n"
+           "   ==============================================================================\n");
+}
+
+void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int arraySize)
+{
+    /* print title */
+    printf("   | :::: %s ", title);
+    int i;
+    for(i = 0; i < 68 - strlen(title); i++)
+        printf(":");
+    printf(" |\n"
+           "   ==============================================================================\n"
+           "   |                                                                            |\n");
+
+    /* print menu options */
+    int j = 0;
+    while(j < arraySize)
+    {
+        printf("   |   %s", options[j]);
+        for(i = 0; i < 73 - strlen(options[j]); i++)
+            printf(" ");
+        printf("|\n");
+        j++;
+    }
+    printf("   |                                                                            |\n");
+
+    /* command prompt */
+    do {
+        printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+        while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
+    } while(*choice < 1 || *choice > arraySize);
+    printf("   |                                                                            |\n"
+           "   ==============================================================================\n");
+}
+
 void singleplayer(int difficultyLevel)
 {
     //body to do
@@ -188,5 +191,6 @@ int drawing(void)
 
 int checkWinner(void)
 {
-    return;
+    //body
+    return 0;
 }
