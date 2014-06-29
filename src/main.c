@@ -4,7 +4,9 @@
 
 void singleplayer(int difficultyLevel);
 void multiplayer(void);
+
 int drawing(void);
+int checkWinner(void);
 
 int main(void)
 {
@@ -60,7 +62,7 @@ int main(void)
 	if(mainMenuChoice == 2) {
 		printf("\n");
 		return 0;
-	}	else {
+	} else {
 
 		/* =================== NUMBER OF PLAYERS ==================== */
 
@@ -136,10 +138,18 @@ void multiplayer(void)
             printf("   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
             while(!scanf("%d", &field)) getchar(); /* in case you type some letters */
         } while(field < 1 || field > 9);
+
+        if(board[field-1] != ' ')
+        {
+            i--;
+            continue;
+        }
+
         printf("   |                                                                            |\n"
                "   ==============================================================================\n");
 
-        i % 2 ? (board[field-1] = 'X') : (board[field-1] = 'O');
+        board[field-1] = i % 2 ? 'X' : 'O';
+        int whoseTurnIsIt = (startingPlayer+i) % 2 + 1;
 
         printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
              "   ==============================================================================\n"
@@ -155,7 +165,9 @@ void multiplayer(void)
              "   |                                   |     |                                  |\n"
              "   |                                %c  |  %c  |  %c                               |\n"
              "   |                                   |     |                                  |\n"
-             "   |                                                                            |\n", (startingPlayer+i) % 2 + 1 , board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+             "   |                                                                            |\n", whoseTurnIsIt, board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+
+        if(i == 5) checkWinner(); /* minimum amount of symbols on gameboard that can cause an end of the game */
     }
 
         printf("   |                                                                            |\n"
@@ -172,4 +184,9 @@ int drawing(void)
 {
 	srand(time(NULL));
 	return rand()%101 < 50 ? 1 : 2;
+}
+
+int checkWinner(void)
+{
+    return;
 }
