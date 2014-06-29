@@ -10,10 +10,10 @@ int checkWinner(void);
 
 int main(void)
 {
-	/* =================== LOGO ==================== */
+    /* =================== LOGO ==================== */
 
-	/* ASCII Generator http://www.network-science.de/ascii/ (font: kban) */
-	printf("\n"
+    /* ASCII Generator http://www.network-science.de/ascii/ (font: kban) */
+    printf("\n"
          "   ==============================================================================\n"
          "   |                                                                            |\n"
          "   |                                                                            |\n"
@@ -42,51 +42,51 @@ int main(void)
          "   |                                                                            |\n"
          "   ==============================================================================\n");
 
-	/* =================== MAIN MENU ==================== */
+    /* =================== MAIN MENU ==================== */
 
-	printf("   | :::: MAIN MENU ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+    printf("   | :::: MAIN MENU ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
          "   ==============================================================================\n"
          "   |                                                                            |\n"
          "   |   1. Play                                                                  |\n"
          "   |   2. Quit                                                                  |\n"
          "   |                                                                            |\n");
 
-	int mainMenuChoice;
-	do {
-		printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-		while(!scanf("%d", &mainMenuChoice)) getchar(); /* in case you type some letters */
-	} while(mainMenuChoice != 1 && mainMenuChoice != 2);
-	printf("   |                                                                            |\n"
-	       "   ==============================================================================\n");
+    int mainMenuChoice;
+    do {
+        printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+        while(!scanf("%d", &mainMenuChoice)) getchar(); /* in case you type some letters */
+    } while(mainMenuChoice != 1 && mainMenuChoice != 2);
+    printf("   |                                                                            |\n"
+           "   ==============================================================================\n");
 
-	if(mainMenuChoice == 2) {
-		printf("\n");
-		return 0;
-	} else {
+    if(mainMenuChoice == 2) {
+        printf("\n");
+        return 0;
+    } else {
 
-		/* =================== NUMBER OF PLAYERS ==================== */
+        /* =================== NUMBER OF PLAYERS ==================== */
 
-		printf("   | :::: NUMBER OF PLAYERS ::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+        printf("   | :::: NUMBER OF PLAYERS ::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
            "   ==============================================================================\n"
            "   |                                                                            |\n"
            "   |   1. One player (play with computer)                                       |\n"
            "   |   2. Two players (play with friend)                                        |\n"
            "   |                                                                            |\n");
 
-		int numberOfPlayers;
-		do {
-			printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-			while(!scanf("%d", &numberOfPlayers)) getchar(); /* in case you type some letters */
-		} while(numberOfPlayers != 1 && numberOfPlayers != 2);
-		printf("   |                                                                            |\n"
-		       "   ==============================================================================\n");
+        int numberOfPlayers;
+        do {
+            printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+            while(!scanf("%d", &numberOfPlayers)) getchar(); /* in case you type some letters */
+        } while(numberOfPlayers != 1 && numberOfPlayers != 2);
+        printf("   |                                                                            |\n"
+               "   ==============================================================================\n");
 
-		/* =================== DIFFICULTY LEVEL ==================== */
+        /* =================== DIFFICULTY LEVEL ==================== */
 
-		if(numberOfPlayers == 2)
-			multiplayer();
-		else {
-			printf("   | :::: DIFFICULTY LEVEL :::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+        if(numberOfPlayers == 2)
+            multiplayer();
+        else {
+            printf("   | :::: DIFFICULTY LEVEL :::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
              "   ==============================================================================\n"
              "   |                                                                            |\n"
              "   |   1. Easy                                                                  |\n"
@@ -94,24 +94,24 @@ int main(void)
              "   |   3. Hard                                                                  |\n"
              "   |                                                                            |\n");
 
-			int difficultyLevel ;
-			do {
-				printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-				while(!scanf("%d", &difficultyLevel)) getchar(); /* in case you type some letters */
-			} while(difficultyLevel != 1 && difficultyLevel != 2 && difficultyLevel != 3);
-			printf("   |                                                                            |\n"
-			       "   ==============================================================================\n");
+            int difficultyLevel ;
+            do {
+                printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+                while(!scanf("%d", &difficultyLevel)) getchar(); /* in case you type some letters */
+            } while(difficultyLevel != 1 && difficultyLevel != 2 && difficultyLevel != 3);
+            printf("   |                                                                            |\n"
+                   "   ==============================================================================\n");
 
-			singleplayer(difficultyLevel);
-		}
-		return 0;
-	}
+            singleplayer(difficultyLevel);
+        }
+        return 0;
+    }
 }
 
 void multiplayer(void)
 {
-	int startingPlayer = drawing();
-	printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+    int startingPlayer = drawing();
+    printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
          "   ==============================================================================\n"
          "   |                                                                            |\n"
          "   |   Let's flip a coin:                                                       |\n"
@@ -177,13 +177,13 @@ void multiplayer(void)
 void singleplayer(int difficultyLevel)
 {
     //body to do
-	printf("singleplayer\n");
+    printf("singleplayer\n");
 }
 
 int drawing(void)
 {
-	srand(time(NULL));
-	return rand()%101 < 50 ? 1 : 2;
+    srand(time(NULL));
+    return rand()%101 < 50 ? 1 : 2;
 }
 
 int checkWinner(void)
