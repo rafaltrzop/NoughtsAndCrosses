@@ -106,7 +106,7 @@ int main(void)
 	}
 }
 
-void singleplayer(int difficultyLevel)
+void multiplayer(void)
 {
 	int startingPlayer = drawing();
 	printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
@@ -124,17 +124,48 @@ void singleplayer(int difficultyLevel)
          "   |                                   |     |                                  |\n"
          "   |                                7  |  8  |  9                               |\n"
          "   |                                   |     |                                  |\n"
-         "   |                                                                            |\n"
-         "   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b", startingPlayer);
-	int field;
-	scanf("%d", &field);
+         "   |                                                                            |\n", startingPlayer);
 
+    int i;
+    int field;
+    char board[9] = "         ";
+
+    for(i = 0; i < 9; i++)
+    {
+        do {
+            printf("   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+            while(!scanf("%d", &field)) getchar(); /* in case you type some letters */
+        } while(field < 1 || field > 9);
+        printf("   |                                                                            |\n"
+               "   ==============================================================================\n");
+
+        i % 2 ? (board[field-1] = 'X') : (board[field-1] = 'O');
+
+        printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+             "   ==============================================================================\n"
+             "   |                                                                            |\n"
+             "   |   PLAYER %d it's your turn now, make a move!                                |\n"
+             "   |                                                                            |\n"
+             "   |                                   |     |                                  |\n"
+             "   |                                %c  |  %c  |  %c                               |\n"
+             "   |                              _____|_____|_____                             |\n"
+             "   |                                   |     |                                  |\n"
+             "   |                                %c  |  %c  |  %c                               |\n"
+             "   |                              _____|_____|_____                             |\n"
+             "   |                                   |     |                                  |\n"
+             "   |                                %c  |  %c  |  %c                               |\n"
+             "   |                                   |     |                                  |\n"
+             "   |                                                                            |\n", (startingPlayer+i) % 2 + 1 , board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+    }
+
+        printf("   |                                                                            |\n"
+               "   ==============================================================================\n");
 }
 
-//to do
-void multiplayer(void)
+void singleplayer(int difficultyLevel)
 {
-	printf("multi\n");
+    //body to do
+	printf("singleplayer\n");
 }
 
 int drawing(void)
