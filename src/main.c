@@ -26,12 +26,9 @@ int main(void)
         printf("\n");
         return 0;
     } else {
-
-    int numberOfPlayers;
-    char numberOfPlayersOptions[][OPTION_MAX_LENGTH] = {"1. One player (play with computer)", "2. Two players (play with friend)"};
-    menuSelection(&numberOfPlayers, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
-
-        /* =================== DIFFICULTY LEVEL ==================== */
+        int numberOfPlayers;
+        char numberOfPlayersOptions[][OPTION_MAX_LENGTH] = {"1. One player (play with computer)", "2. Two players (play with friend)"};
+        menuSelection(&numberOfPlayers, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
 
         if(numberOfPlayers == 2)
             multiplayer();
