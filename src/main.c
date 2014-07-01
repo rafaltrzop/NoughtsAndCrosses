@@ -12,6 +12,7 @@ void singleplayer(int difficultyLevel);
 void multiplayer(void);
 
 int drawing(void);
+//int checkWinner(int gameboardState[]);
 int checkWinner(void);
 
 int main(void)
@@ -67,13 +68,14 @@ void multiplayer(void)
     int field;
     char board[9] = "         "; /* nine spaces, one for each field */
 
-    for(i = 0; i < 9; i++)
+    for(i = 0; i < 9999; i++)
     {
         do {
             printf("   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
             while(!scanf("%d", &field)) getchar(); /* in case you type some letters */
         } while(field < 1 || field > 9);
 
+        /* ask for symbol again if given field is not empty */
         if(board[field-1] != ' ')
         {
             i--;
@@ -84,6 +86,38 @@ void multiplayer(void)
                "   ==============================================================================\n");
 
         board[field-1] = i % 2 ? 'X' : 'O';
+
+        if(i == 8)
+        {
+            printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+                   "   ==============================================================================\n"
+                   "   |                                                                            |\n"
+                   "   |   It's a tie!                                                              |\n"
+                   "   |                                                                            |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                %c  |  %c  |  %c                               |\n"
+                   "   |                              _____|_____|_____                             |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                %c  |  %c  |  %c                               |\n"
+                   "   |                              _____|_____|_____                             |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                %c  |  %c  |  %c                               |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                                                            |\n"
+                   "   ==============================================================================\n", board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+
+            int playAgainChoice;
+            char playAgainOptions[][OPTION_MAX_LENGTH] = {"1. Yes", "2. No"};
+            menuSelection(&playAgainChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
+
+            if(playAgainChoice == 1)
+                multiplayer();
+            else
+                printf("\n");
+                return;
+
+        }
+
         int whoseTurnIsIt = (startingPlayer+i) % 2 + 1;
 
         printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
@@ -102,7 +136,7 @@ void multiplayer(void)
                "   |                                   |     |                                  |\n"
                "   |                                                                            |\n", whoseTurnIsIt, board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
 
-        if(i == 5) checkWinner(); /* minimum amount of symbols on gameboard that can cause an end of the game */
+        if(i > 4) checkWinner(); /* minimum amount of symbols on gameboard that can cause an end of the game */
     }
 
         printf("   |                                                                            |\n"
@@ -186,6 +220,7 @@ int drawing(void)
     return rand()%101 < 50 ? 1 : 2;
 }
 
+//int checkWinner(int gameboardState[])
 int checkWinner(void)
 {
     //body
