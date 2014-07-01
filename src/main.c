@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h> /* for srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
-#include <string.h> /* for menuChoose */
+#include <string.h> /* for strlen() in menuChoose */
+#include <stdbool.h> /* for true and false in anyWinners() */
 
 #define OPTION_MAX_LENGTH 40
 
@@ -12,8 +13,7 @@ void singleplayer(int difficultyLevel);
 void multiplayer(void);
 
 int drawing(void);
-//int checkWinner(int gameboardState[]);
-int checkWinner(void);
+bool anyWinners(char gameboardState[]);
 
 int main(void)
 {
@@ -68,7 +68,7 @@ void multiplayer(void)
     int field;
     char board[9] = "         "; /* nine spaces, one for each field */
 
-    for(i = 0; i < 9999; i++)
+    for(i = 0; 1; i++)
     {
         do {
             printf("   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
@@ -114,11 +114,11 @@ void multiplayer(void)
                 multiplayer();
             else
                 printf("\n");
-                return;
 
+            return;
         }
 
-        int whoseTurnIsIt = (startingPlayer+i) % 2 + 1;
+        int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
 
         printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
                "   ==============================================================================\n"
@@ -136,9 +136,8 @@ void multiplayer(void)
                "   |                                   |     |                                  |\n"
                "   |                                                                            |\n", whoseTurnIsIt, board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
 
-        if(i > 4) checkWinner(); /* minimum amount of symbols on gameboard that can cause an end of the game */
+        if(i > 3 && anyWinners(board)) printf("end game here\n"); /* 5 is minimum amount of symbols on gameboard that can cause an end of the game, note that we iterate i from 0 */
     }
-
         printf("   |                                                                            |\n"
                "   ==============================================================================\n");
 }
@@ -220,9 +219,21 @@ int drawing(void)
     return rand()%101 < 50 ? 1 : 2;
 }
 
-//int checkWinner(int gameboardState[])
-int checkWinner(void)
+bool anyWinners(char gameboardState[])
 {
-    //body
-    return 0;
+    int i;
+
+      /* check every row */
+    for(i = 0; i < 7; i += 3)
+        if(gameboardState[i] == gameboardState[i+1] && gameboardState[i] == gameboardState[i+2])
+            return true;
+
+      /* check every column */
+    for(i = 0; i < 3; i++)
+        if(gameboardState[i] == gameboardState[i+3] && gameboardState[i] == gameboardState[i+6])
+            return true;
+
+    /* check diagonals */
+    if((gameboardState[0] == gameboardState[4] && gameboardState[0] == gameboardState[8]) || (gameboardState[2] == gameboardState[4] && gameboardState[2] == gameboardState[6]))
+        return true;
 }
