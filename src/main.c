@@ -13,7 +13,7 @@ void singleplayer(int difficultyLevel);
 void multiplayer(void);
 
 int drawing(void);
-bool anyWinners(char gameboardState[]);
+bool anyWinners(char boardState[]);
 
 int main(void)
 {
@@ -87,6 +87,29 @@ void multiplayer(void)
 
         board[field-1] = i % 2 ? 'X' : 'O';
 
+        /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
+        if(i > 3 && anyWinners(board))
+        {
+            printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
+                   "   ==============================================================================\n"
+                   "   |                                                                            |\n"
+                   "   |   \"%c\" wins!                                                                |\n"
+                   "   |                                                                            |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                %c  |  %c  |  %c                               |\n"
+                   "   |                              _____|_____|_____                             |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                %c  |  %c  |  %c                               |\n"
+                   "   |                              _____|_____|_____                             |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                %c  |  %c  |  %c                               |\n"
+                   "   |                                   |     |                                  |\n"
+                   "   |                                                                            |\n"
+                   "   ==============================================================================\n\n", board[field-1], board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+
+            return;
+        }
+
         if(i == 8)
         {
             printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
@@ -135,8 +158,6 @@ void multiplayer(void)
                "   |                                %c  |  %c  |  %c                               |\n"
                "   |                                   |     |                                  |\n"
                "   |                                                                            |\n", whoseTurnIsIt, board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
-
-        if(i > 3 && anyWinners(board)) printf("end game here\n"); /* 5 is minimum amount of symbols on gameboard that can cause an end of the game, note that we iterate i from 0 */
     }
         printf("   |                                                                            |\n"
                "   ==============================================================================\n");
@@ -219,21 +240,23 @@ int drawing(void)
     return rand()%101 < 50 ? 1 : 2;
 }
 
-bool anyWinners(char gameboardState[])
+bool anyWinners(char boardState[])
 {
     int i;
 
       /* check every row */
     for(i = 0; i < 7; i += 3)
-        if(gameboardState[i] == gameboardState[i+1] && gameboardState[i] == gameboardState[i+2])
+        if(boardState[i] != ' ' && boardState[i] == boardState[i+1] && boardState[i] == boardState[i+2])
             return true;
 
       /* check every column */
     for(i = 0; i < 3; i++)
-        if(gameboardState[i] == gameboardState[i+3] && gameboardState[i] == gameboardState[i+6])
+        if(boardState[i] != ' ' && boardState[i] == boardState[i+3] && boardState[i] == boardState[i+6])
             return true;
 
     /* check diagonals */
-    if((gameboardState[0] == gameboardState[4] && gameboardState[0] == gameboardState[8]) || (gameboardState[2] == gameboardState[4] && gameboardState[2] == gameboardState[6]))
+    if((boardState[0] != ' ' && boardState[0] == boardState[4] && boardState[0] == boardState[8]) || (boardState[2] != ' ' && boardState[2] == boardState[4] && boardState[2] == boardState[6]))
         return true;
+
+    return false;
 }
