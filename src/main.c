@@ -105,7 +105,16 @@ void multiplayer(void)
                    "   |                                %c  |  %c  |  %c                               |\n"
                    "   |                                   |     |                                  |\n"
                    "   |                                                                            |\n"
-                   "   ==============================================================================\n\n", board[field-1], board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+                   "   ==============================================================================\n", board[field-1], board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+
+            int playAgainChoice;
+            char playAgainOptions[][OPTION_MAX_LENGTH] = {"1. Yes", "2. No"};
+            menuSelection(&playAgainChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
+
+            if(playAgainChoice == 1)
+                multiplayer();
+            else
+                printf("\n");
 
             return;
         }
@@ -255,7 +264,7 @@ bool anyWinners(char boardState[])
             return true;
 
     /* check diagonals */
-    if((boardState[0] != ' ' && boardState[0] == boardState[4] && boardState[0] == boardState[8]) || (boardState[2] != ' ' && boardState[2] == boardState[4] && boardState[2] == boardState[6]))
+    if(boardState[4] != ' ' && ((boardState[0] == boardState[4] && boardState[0] == boardState[8]) || (boardState[2] == boardState[4] && boardState[2] == boardState[6])))
         return true;
 
     return false;
