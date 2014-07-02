@@ -7,7 +7,11 @@
 #define OPTION_MAX_LENGTH 40
 
 void printLogo(void);
-void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int arraySize);
+void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions);
+
+void printTitle(char * title);
+void printMenuOptions(char options[][OPTION_MAX_LENGTH], int numberOfOptions);
+void askForMenuNumber(int * choice, int numberOfOptions);
 
 void singleplayer(int difficultyLevel);
 void multiplayer(void);
@@ -205,34 +209,43 @@ void printLogo(void)
            "   ==============================================================================\n");
 }
 
-void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int arraySize)
+void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions)
 {
-    /* print title */
+    printTitle(title);
+    printMenuOptions(options, numberOfOptions);
+    askForMenuNumber(choice, numberOfOptions);
+}
+
+void printTitle(char * title)
+{
     printf("   | :::: %s ", title);
-    int i;
-    for(i = 0; i < 68 - strlen(title); i++)
+    for(int i = 0; i < 68 - strlen(title); i++)
         printf(":");
     printf(" |\n"
            "   ==============================================================================\n"
            "   |                                                                            |\n");
+}
 
-    /* print menu options */
-    int j = 0;
-    while(j < arraySize)
+void printMenuOptions(char options[][OPTION_MAX_LENGTH], int numberOfOptions)
+{
+    int i = 0;
+    while(i < numberOfOptions)
     {
-        printf("   |   %s", options[j]);
-        for(i = 0; i < 73 - strlen(options[j]); i++)
+        printf("   |   %s", options[i]);
+        for(int j = 0; j < 73 - strlen(options[i]); j++)
             printf(" ");
         printf("|\n");
-        j++;
+        i++;
     }
     printf("   |                                                                            |\n");
+}
 
-    /* command prompt */
+void askForMenuNumber(int * choice, int numberOfOptions)
+{
     do {
         printf("   |   Type menu number:                                                        |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
         while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
-    } while(*choice < 1 || *choice > arraySize);
+    } while(*choice < 1 || *choice > numberOfOptions);
     printf("   |                                                                            |\n"
            "   ==============================================================================\n");
 }
