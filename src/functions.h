@@ -1,6 +1,6 @@
 #ifndef HEADER_H
     #define HEADER_H
-    #define OPTION_MAX_LENGTH 40
+    #define OPTION_MAX_LENGTH 34
 
     void printLogo(void);
     void printGameboard(char board[]);
