@@ -23,26 +23,23 @@ int main(void)
 {
     printLogo();
 
-    int mainMenuChoice;
+    int menuChoice;
     char mainMenuOptions[][OPTION_MAX_LENGTH] = {"1. Play", "2. Quit"};
-    menuSelection(&mainMenuChoice, "MAIN MENU", mainMenuOptions, 2);
+    menuSelection(&menuChoice, "MAIN MENU", mainMenuOptions, 2);
 
-    if(mainMenuChoice == 2) {
+    if(menuChoice == 2) {
         printf("\n");
         return 0;
     } else {
-        int numberOfPlayers;
         char numberOfPlayersOptions[][OPTION_MAX_LENGTH] = {"1. One player (play with computer)", "2. Two players (play with friend)"};
-        menuSelection(&numberOfPlayers, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
+        menuSelection(&menuChoice, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
 
-        if(numberOfPlayers == 2)
+        if(menuChoice == 2)
             multiplayer();
         else {
-            int difficultyLevel;
             char difficultyLevelOptions[][OPTION_MAX_LENGTH] = {"1. Easy", "2. Medium", "3. Hard"};
-            menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
-
-            singleplayer(difficultyLevel);
+            menuSelection(&menuChoice, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
+            singleplayer(menuChoice);
         }
         return 0;
     }
@@ -253,7 +250,7 @@ void askForMenuNumber(int * choice, int numberOfOptions)
 void singleplayer(int difficultyLevel)
 {
     //body to do
-    printf("singleplayer\n");
+    printf("singleplayer level: %d\n", difficultyLevel);
 }
 
 int drawing(void)
