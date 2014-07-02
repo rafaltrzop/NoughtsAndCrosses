@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h> /* for srand() in drawing() */
+#include <stdlib.h> /* for srand() in drawing() and exit() in playAgain() */
 #include <time.h> /* for time() in drawing() */
 #include <string.h> /* for strlen() in menuChoose */
 #include <stdbool.h> /* for true and false in anyWinners() */
@@ -7,6 +7,7 @@
 #define OPTION_MAX_LENGTH 40
 
 void printLogo(void);
+void printGameboard(char board[]);
 void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions);
 
 void printTitle(char * title);
@@ -18,6 +19,7 @@ void multiplayer(void);
 
 int drawing(void);
 bool anyWinners(char boardState[]);
+void playAgain(void (*mode)(void));
 
 int main(void)
 {
@@ -47,29 +49,16 @@ int main(void)
 
 void multiplayer(void)
 {
+    printTitle("GAMEBOARD");
     int startingPlayer = drawing();
-    printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-           "   ==============================================================================\n"
-           "   |                                                                            |\n"
-           "   |   Let's flip a coin:                                                       |\n"
-           "   |   PLAYER %d starts the game!                                                |\n"
-           "   |                                                                            |\n"
-           "   |                                   |     |                                  |\n"
-           "   |                                1  |  2  |  3                               |\n"
-           "   |                              _____|_____|_____                             |\n"
-           "   |                                   |     |                                  |\n"
-           "   |                                4  |  5  |  6                               |\n"
-           "   |                              _____|_____|_____                             |\n"
-           "   |                                   |     |                                  |\n"
-           "   |                                7  |  8  |  9                               |\n"
-           "   |                                   |     |                                  |\n"
-           "   |                                                                            |\n", startingPlayer);
+    printf("   |   Let's flip a coin:                                                       |\n"
+           "   |   PLAYER %d starts the game!                                                |\n", startingPlayer);
+    printGameboard("123456789");
 
-    int i;
     int field;
     char board[9] = "         "; /* nine spaces, one for each field */
 
-    for(i = 0; 1; i++)
+    for(int i = 0; 1; i++)
     {
         do {
             printf("   |   Put my symbol at field:                                                  |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
@@ -91,83 +80,29 @@ void multiplayer(void)
         /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
         if(i > 3 && anyWinners(board))
         {
-            printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-                   "   ==============================================================================\n"
-                   "   |                                                                            |\n"
-                   "   |   \"%c\" wins!                                                                |\n"
-                   "   |                                                                            |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                %c  |  %c  |  %c                               |\n"
-                   "   |                              _____|_____|_____                             |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                %c  |  %c  |  %c                               |\n"
-                   "   |                              _____|_____|_____                             |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                %c  |  %c  |  %c                               |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                                                            |\n"
-                   "   ==============================================================================\n", board[field-1], board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+            printTitle("GAMEBOARD");
+            printf("   |   \"%c\" wins!                                                                |\n", board[field-1]);
+            printGameboard(board);
+            printf("   ==============================================================================\n");
 
-            int playAgainChoice;
-            char playAgainOptions[][OPTION_MAX_LENGTH] = {"1. Yes", "2. No"};
-            menuSelection(&playAgainChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
-
-            if(playAgainChoice == 1)
-                multiplayer();
-            else
-                printf("\n");
-
-            return;
+            playAgain(multiplayer);
         }
 
         if(i == 8)
         {
-            printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-                   "   ==============================================================================\n"
-                   "   |                                                                            |\n"
-                   "   |   It's a tie!                                                              |\n"
-                   "   |                                                                            |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                %c  |  %c  |  %c                               |\n"
-                   "   |                              _____|_____|_____                             |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                %c  |  %c  |  %c                               |\n"
-                   "   |                              _____|_____|_____                             |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                %c  |  %c  |  %c                               |\n"
-                   "   |                                   |     |                                  |\n"
-                   "   |                                                                            |\n"
-                   "   ==============================================================================\n", board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+            printTitle("GAMEBOARD");
+            printf("   |   It's a tie!                                                              |\n");
+            printGameboard(board);
+            printf("   ==============================================================================\n");
 
-            int playAgainChoice;
-            char playAgainOptions[][OPTION_MAX_LENGTH] = {"1. Yes", "2. No"};
-            menuSelection(&playAgainChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
-
-            if(playAgainChoice == 1)
-                multiplayer();
-            else
-                printf("\n");
-
-            return;
+            playAgain(multiplayer);
         }
 
         int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
 
-        printf("   | :::: GAMEBOARD ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: |\n"
-               "   ==============================================================================\n"
-               "   |                                                                            |\n"
-               "   |   PLAYER %d it's your turn now, make a move!                                |\n"
-               "   |                                                                            |\n"
-               "   |                                   |     |                                  |\n"
-               "   |                                %c  |  %c  |  %c                               |\n"
-               "   |                              _____|_____|_____                             |\n"
-               "   |                                   |     |                                  |\n"
-               "   |                                %c  |  %c  |  %c                               |\n"
-               "   |                              _____|_____|_____                             |\n"
-               "   |                                   |     |                                  |\n"
-               "   |                                %c  |  %c  |  %c                               |\n"
-               "   |                                   |     |                                  |\n"
-               "   |                                                                            |\n", whoseTurnIsIt, board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
+        printTitle("GAMEBOARD");
+        printf("   |   PLAYER %d it's your turn now, make a move!                                |\n", whoseTurnIsIt);
+        printGameboard(board);
     }
         printf("   |                                                                            |\n"
                "   ==============================================================================\n");
@@ -204,6 +139,21 @@ void printLogo(void)
            "   |                                                                            |\n"
            "   |                                                                            |\n"
            "   ==============================================================================\n");
+}
+
+void printGameboard(char board[])
+{
+    printf("   |                                                                            |\n"
+           "   |                                   |     |                                  |\n"
+           "   |                                %c  |  %c  |  %c                               |\n"
+           "   |                              _____|_____|_____                             |\n"
+           "   |                                   |     |                                  |\n"
+           "   |                                %c  |  %c  |  %c                               |\n"
+           "   |                              _____|_____|_____                             |\n"
+           "   |                                   |     |                                  |\n"
+           "   |                                %c  |  %c  |  %c                               |\n"
+           "   |                                   |     |                                  |\n"
+           "   |                                                                            |\n", board[0], board[1], board[2], board[3], board[4], board[5], board[6], board[7], board[8]);
 }
 
 void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions)
@@ -245,6 +195,20 @@ void askForMenuNumber(int * choice, int numberOfOptions)
     } while(*choice < 1 || *choice > numberOfOptions);
     printf("   |                                                                            |\n"
            "   ==============================================================================\n");
+}
+
+void playAgain(void (*mode)(void))
+{
+    int menuChoice;
+    char playAgainOptions[][OPTION_MAX_LENGTH] = {"1. Yes", "2. No"};
+    menuSelection(&menuChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
+
+    if(menuChoice == 1)
+        mode();
+    else
+        printf("\n");
+
+    exit(EXIT_SUCCESS);
 }
 
 void singleplayer(int difficultyLevel)
