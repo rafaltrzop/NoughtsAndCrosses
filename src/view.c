@@ -1,7 +1,7 @@
-#include "functions.h"
+#include "view.h"
+#include "controllers.h" /* for "mess" to work */
 #include <stdio.h>
-#include <stdlib.h> /* for srand() in drawing() and exit() in playAgain() */
-#include <time.h> /* for time() in drawing() */
+#include <stdlib.h> /* for exit() in playAgain() */
 #include <string.h> /* for strlen() in printTitle() and printMenuOptions() */
 
 /* mess =============================================================================== */
@@ -70,7 +70,10 @@ void playAgain(void (*mode)(void))
 {
     printf("   ==============================================================================\n");
     int menuChoice;
-    char playAgainOptions[][OPTION_MAX_LENGTH] = {"1. Yes", "2. No"};
+    char playAgainOptions[][OPTION_MAX_LENGTH] = {
+      "1. Yes",
+      "2. No"
+    };
     menuSelection(&menuChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
 
     if(menuChoice == 1)
@@ -79,51 +82,6 @@ void playAgain(void (*mode)(void))
         printf("\n");
 
     exit(EXIT_SUCCESS);
-}
-
-/* controllers =============================================================================== */
-
-void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions)
-{
-    printTitle(title);
-    printMenuOptions(options, numberOfOptions);
-    askForMenuNumber(choice, numberOfOptions);
-    printLine();
-}
-
-void askForMenuNumber(int * choice, int numberOfOptions)
-{
-    do {
-        printf("   |   Type number:                                                             |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-        while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
-    } while(*choice < 1 || *choice > numberOfOptions);
-}
-
-int drawing(void)
-{
-    srand(time(NULL));
-    return rand()%101 < 50 ? 1 : 2;
-}
-
-int anyWinners(char boardState[])
-{
-    int i;
-
-      /* check every row */
-    for(i = 0; i < 7; i += 3)
-        if(boardState[i] != ' ' && boardState[i] == boardState[i+1] && boardState[i] == boardState[i+2])
-            return 1;
-
-      /* check every column */
-    for(i = 0; i < 3; i++)
-        if(boardState[i] != ' ' && boardState[i] == boardState[i+3] && boardState[i] == boardState[i+6])
-            return 1;
-
-    /* check diagonals */
-    if(boardState[4] != ' ' && ((boardState[0] == boardState[4] && boardState[0] == boardState[8]) || (boardState[2] == boardState[4] && boardState[2] == boardState[6])))
-        return 1;
-
-    return 0;
 }
 
 /* view =================================================================================*/
