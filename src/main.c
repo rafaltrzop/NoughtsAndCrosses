@@ -45,8 +45,8 @@ void multiplayer(void)
 {
     printTitle("GAMEBOARD");
     int startingPlayer = drawing();
-    printf("   |   Let's flip a coin:                                                       |\n"
-           "   |   PLAYER %d starts the game!                                                |\n", startingPlayer);
+    printf("   |   Let's flip a coin:                                                   |\n"
+           "   |   PLAYER %d starts the game!                                            |\n", startingPlayer);
     printGameboard("123456789");
 
     int field;
@@ -71,7 +71,7 @@ void multiplayer(void)
         if(i > 3 && anyWinners(board))
         {
             printTitle("GAMEBOARD");
-            printf("   |   \"%c\" wins!                                                                |\n", board[field-1]);
+            printf("   |   \"%c\" wins!                                                            |\n", board[field-1]);
             printGameboard(board);
 
             playAgain(multiplayer);
@@ -80,7 +80,7 @@ void multiplayer(void)
         if(i == 8)
         {
             printTitle("GAMEBOARD");
-            printf("   |   It's a tie!                                                              |\n");
+            printf("   |   It's a tie!                                                          |\n");
             printGameboard(board);
 
             playAgain(multiplayer);
@@ -89,7 +89,7 @@ void multiplayer(void)
         int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
 
         printTitle("GAMEBOARD");
-        printf("   |   PLAYER %d it's your turn now, make a move!                                |\n", whoseTurnIsIt);
+        printf("   |   PLAYER %d it's your turn now, make a move!                            |\n", whoseTurnIsIt);
         printGameboard(board);
     }
     printLine();

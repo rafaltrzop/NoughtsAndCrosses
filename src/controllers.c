@@ -15,14 +15,14 @@ void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH]
 void askForMenuNumber(int * choice, int numberOfOptions)
 {
     do {
-        printf("   |   Type number:                                                             |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+        printf("   |   Type number:                                                         |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
         while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
     } while(*choice < 1 || *choice > numberOfOptions);
 }
 
 void playAgain(void (*mode)(void))
 {
-    printf("   ==============================================================================\n");
+    printf("   ==========================================================================\n");
     int menuChoice;
     char playAgainOptions[][OPTION_MAX_LENGTH] = {
       "1. Yes",
