@@ -2,12 +2,6 @@
     #define VIEW_H
     #include "constants.h"
 
-    /* mess */
-    void multiplayer(void);
-    void singleplayer(int difficultyLevel);
-    void playAgain(void (*mode)(void));
-
-    /* view */
     void printLogo(void);
     void printGameboard(char board[]);
     void printTitle(char * title);

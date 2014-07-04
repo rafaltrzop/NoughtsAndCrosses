@@ -1,7 +1,7 @@
 #include "controllers.h"
-#include "view.h"
+#include "view.h" /* for prototypes used in menuSelection() */
 #include <stdio.h>
-#include <stdlib.h> /* for srand() in drawing() */
+#include <stdlib.h> /* for exit() in playAgain() and srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
 
 void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions)
@@ -18,6 +18,24 @@ void askForMenuNumber(int * choice, int numberOfOptions)
         printf("   |   Type number:                                                             |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
         while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
     } while(*choice < 1 || *choice > numberOfOptions);
+}
+
+void playAgain(void (*mode)(void))
+{
+    printf("   ==============================================================================\n");
+    int menuChoice;
+    char playAgainOptions[][OPTION_MAX_LENGTH] = {
+      "1. Yes",
+      "2. No"
+    };
+    menuSelection(&menuChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
+
+    if(menuChoice == 1)
+        mode();
+    else
+        printf("\n");
+
+    exit(EXIT_SUCCESS);
 }
 
 int drawing(void)
