@@ -6,5 +6,4 @@
     void printGameboard(char board[]);
     void printTitle(char * title);
     void printMenuOptions(char options[][OPTION_MAX_LENGTH], int numberOfOptions);
-    void printLine(void);
 #endif

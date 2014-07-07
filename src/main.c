@@ -60,14 +60,13 @@ void multiplayer(void)
         }
 
         board[field-1] = i % 2 ? 'O' : 'X';
-        printLine();
 
         /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
         if(i > 3 && anyWinners(board))
         {
             printTitle("GAMEBOARD");
-            printf("   |   \"%c\" wins!                                                            |\n", board[field-1]);
             printGameboard(board);
+            printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
 
             playAgain(multiplayer);
         }
@@ -75,8 +74,8 @@ void multiplayer(void)
         if(i == 8)
         {
             printTitle("GAMEBOARD");
-            printf("   |   It's a tie!                                                          |\n");
             printGameboard(board);
+            printf("   |                               IT'S A TIE!                              |\n");
 
             playAgain(multiplayer);
         }
@@ -88,10 +87,9 @@ void multiplayer(void)
         printf("   |   PLAYER %d it's your turn now, make a move!                            |\n", whoseTurnIsIt);
         printGameboard(board);
     }
-    printLine();
 }
 
-void singleplayer()
+void singleplayer(void)
 {
     /* choose difficulty level */
     int difficultyLevel;
@@ -134,14 +132,13 @@ void singleplayer()
             }
 
             board[field-1] = i % 2 ? 'O' : 'X';
-            printLine();
 
             /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
             if(i > 3 && anyWinners(board))
             {
                 printTitle("GAMEBOARD");
-                printf("   |   \"%c\" wins!                                                            |\n", board[field-1]);
                 printGameboard(board);
+                printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
 
                 playAgain(singleplayer);
             }
@@ -149,8 +146,8 @@ void singleplayer()
             if(i == 8)
             {
                 printTitle("GAMEBOARD");
-                printf("   |   It's a tie!                                                          |\n");
                 printGameboard(board);
+                printf("   |                               IT'S A TIE!                              |\n");
 
                 playAgain(singleplayer);
             }
@@ -161,16 +158,15 @@ void singleplayer()
             printGameboard(board);
         } else {
             int field = aiPutSign(difficultyLevel, board);
-            board[field] = i % 2 ? 'O' : 'X';
-            printf("   |   Type number: %d                                                       |\n", field + 1);
-            printLine();
+            board[field-1] = i % 2 ? 'O' : 'X';
+            printf("   |   Type number: %d                                                       |\n", field);
 
             /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
             if(i > 3 && anyWinners(board))
             {
                 printTitle("GAMEBOARD");
-                printf("   |   \"%c\" wins!                                                            |\n", board[field-1]);
                 printGameboard(board);
+                printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
 
                 playAgain(singleplayer);
             }
@@ -178,8 +174,8 @@ void singleplayer()
             if(i == 8)
             {
                 printTitle("GAMEBOARD");
-                printf("   |   It's a tie!                                                          |\n");
                 printGameboard(board);
+                printf("   |                              IT'S A TIE!                               |\n");
 
                 playAgain(singleplayer);
             }
@@ -196,8 +192,8 @@ int aiPutSign(int difficultyLevel, char board[])
 {
     if(difficultyLevel == 1)
     {
-        int field = rand() % 9; /* use seed from drawing() function */
-        return board[field] == ' ' ? field : aiPutSign(difficultyLevel, board);
+        int field = rand() % 9 + 1; /* use seed from drawing() function */
+        return board[field-1] == ' ' ? field : aiPutSign(difficultyLevel, board);
     } else if(difficultyLevel == 2)
     {
         //to do

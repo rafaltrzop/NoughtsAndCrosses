@@ -30,9 +30,7 @@ void printLogo(void)
            "   |         '|.      .  ||     ||   || . '|.. . '|.. ||      . '|..        |\n"
            "   |          ''|....'  .||.     '|..|' |'..|' |'..|'  '|...' |'..|'        |\n"
            "   |                                                                        |\n"
-           "   |                                                                        |\n"
-           "   |                                                                        |\n"
-           "   ==========================================================================\n");
+           "   |                                                                        |\n");
 }
 
 void printGameboard(char board[])
@@ -52,7 +50,9 @@ void printGameboard(char board[])
 
 void printTitle(char * title)
 {
-    printf("   | :::: %s ", title);
+    printf("   |                                                                        |\n"
+           "   ==========================================================================\n"
+           "   | :::: %s ", title);
     for(int i = 0; i < 64 - strlen(title); i++)
         printf(":");
     printf(" |\n"
@@ -69,11 +69,4 @@ void printMenuOptions(char options[][OPTION_MAX_LENGTH], int numberOfOptions)
             printf(" ");
         printf("|\n");
     }
-    printf("   |                                                                        |\n");
-}
-
-void printLine(void)
-{
-    printf("   |                                                                        |\n"
-           "   ==========================================================================\n");
 }

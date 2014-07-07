@@ -8,8 +8,8 @@ void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH]
 {
     printTitle(title);
     printMenuOptions(options, numberOfOptions);
+    printf("   |                                                                        |\n");
     askForMenuNumber(choice, numberOfOptions);
-    printLine();
 }
 
 void askForMenuNumber(int * choice, int numberOfOptions)
@@ -22,7 +22,6 @@ void askForMenuNumber(int * choice, int numberOfOptions)
 
 void playAgain(void (*mode)(void))
 {
-    printf("   ==========================================================================\n");
     int menuChoice;
     char playAgainOptions[][OPTION_MAX_LENGTH] = {
       "1. Yes",
@@ -33,7 +32,8 @@ void playAgain(void (*mode)(void))
     if(menuChoice == 1)
         mode();
     else
-        printf("\n");
+        printf("   |                                                                        |\n"
+               "   ==========================================================================\n\n");
 
     exit(EXIT_SUCCESS);
 }
@@ -48,12 +48,12 @@ int anyWinners(char boardState[])
 {
     int i;
 
-      /* check every row */
+    /* check every row */
     for(i = 0; i < 7; i += 3)
         if(boardState[i] != ' ' && boardState[i] == boardState[i+1] && boardState[i] == boardState[i+2])
             return 1;
 
-      /* check every column */
+    /* check every column */
     for(i = 0; i < 3; i++)
         if(boardState[i] != ' ' && boardState[i] == boardState[i+3] && boardState[i] == boardState[i+6])
             return 1;
