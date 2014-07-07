@@ -1,10 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h> /* for rand() in aiPutSign() */
 #include "view.h"
 #include "controllers.h"
 #include "constants.h"
 
 void multiplayer(void);
-void singleplayer(int difficultyLevel);
+void singleplayer(void);
+int aiPutSign(int difficultyLevel, char board[]);
 
 int main(void)
 {
@@ -28,23 +30,17 @@ int main(void)
 
         if(menuChoice == 2)
             multiplayer();
-        else {
-            char difficultyLevelOptions[][OPTION_MAX_LENGTH] = {
-                "1. Easy",
-                "2. Normal",
-                "3. Hard"
-            };
-            menuSelection(&menuChoice, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
-            singleplayer(menuChoice);
-        }
+        else
+            singleplayer();
     }
     return 0;
 }
 
 void multiplayer(void)
 {
-    printTitle("GAMEBOARD");
     int startingPlayer = drawing();
+
+    printTitle("INSTRUCTIONS");
     printf("   |   Let's flip a coin:                                                   |\n"
            "   |   PLAYER %d starts the game!                                            |\n", startingPlayer);
     printGameboard("123456789");
@@ -63,9 +59,8 @@ void multiplayer(void)
             continue;
         }
 
+        board[field-1] = i % 2 ? 'O' : 'X';
         printLine();
-
-        board[field-1] = i % 2 ? 'X' : 'O';
 
         /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
         if(i > 3 && anyWinners(board))
@@ -86,6 +81,7 @@ void multiplayer(void)
             playAgain(multiplayer);
         }
 
+        /* prepare view for the next iteration */
         int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
 
         printTitle("GAMEBOARD");
@@ -95,8 +91,120 @@ void multiplayer(void)
     printLine();
 }
 
-void singleplayer(int difficultyLevel)
+void singleplayer()
 {
-    //body to do
-    printf("singleplayer level: %d\n", difficultyLevel);
+    /* choose difficulty level */
+    int difficultyLevel;
+    char difficultyLevelOptions[][OPTION_MAX_LENGTH] = {
+        "1. Easy",
+        "2. Normal",
+        "3. Hard"
+    };
+    menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
+
+    /* decide who starts the game and print instructions */
+    int startingPlayer = drawing();
+    char players[2][78] = {
+        "   |   YOU start the game!                                                  |",
+        "   |   COMPUTER starts the game!                                            |"
+    };
+
+    printTitle("INSTRUCTIONS");
+    printf("   |   Let's flip a coin:                                                   |\n"
+           "%s\n", players[startingPlayer-1]);
+    printGameboard("123456789");
+
+    int field;
+    char board[9] = "         "; /* nine spaces, one for each field */
+
+    for(int i = 0; 1; i++)
+    {
+        int whoseTurnIsIt = (startingPlayer + i) % 2;
+
+        /* depending on player ask for sign or run AI */
+        if(whoseTurnIsIt == 1)
+        {
+            askForMenuNumber(&field, 9);
+
+            /* ask for symbol again if given field is not empty */
+            if(board[field-1] != ' ')
+            {
+                i--;
+                continue;
+            }
+
+            board[field-1] = i % 2 ? 'O' : 'X';
+            printLine();
+
+            /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
+            if(i > 3 && anyWinners(board))
+            {
+                printTitle("GAMEBOARD");
+                printf("   |   \"%c\" wins!                                                            |\n", board[field-1]);
+                printGameboard(board);
+
+                playAgain(singleplayer);
+            }
+
+            if(i == 8)
+            {
+                printTitle("GAMEBOARD");
+                printf("   |   It's a tie!                                                          |\n");
+                printGameboard(board);
+
+                playAgain(singleplayer);
+            }
+
+            /* prepare view for the next iteration */
+            printTitle("GAMEBOARD");
+            printf("   |   COMPUTER is making a move!                                           |\n");
+            printGameboard(board);
+        } else {
+            int field = aiPutSign(difficultyLevel, board);
+            board[field] = i % 2 ? 'O' : 'X';
+            printf("   |   Type number: %d                                                       |\n", field + 1);
+            printLine();
+
+            /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
+            if(i > 3 && anyWinners(board))
+            {
+                printTitle("GAMEBOARD");
+                printf("   |   \"%c\" wins!                                                            |\n", board[field-1]);
+                printGameboard(board);
+
+                playAgain(singleplayer);
+            }
+
+            if(i == 8)
+            {
+                printTitle("GAMEBOARD");
+                printf("   |   It's a tie!                                                          |\n");
+                printGameboard(board);
+
+                playAgain(singleplayer);
+            }
+
+            /* prepare view for the next iteration */
+            printTitle("GAMEBOARD");
+            printf("   |   YOUR turn now, make a move!                                          |\n");
+            printGameboard(board);
+        }
+    }
+}
+
+int aiPutSign(int difficultyLevel, char board[])
+{
+    if(difficultyLevel == 1)
+    {
+        int field = rand() % 9; /* use seed from drawing() function */
+        return board[field] == ' ' ? field : aiPutSign(difficultyLevel, board);
+    } else if(difficultyLevel == 2)
+    {
+        //to do
+        return 2;
+    } else if(difficultyLevel == 3)
+    {
+        //to do
+        return 3;
+    }
 }
