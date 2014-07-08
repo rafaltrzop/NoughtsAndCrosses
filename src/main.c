@@ -6,7 +6,7 @@
 
 void multiplayer(void);
 void singleplayer(void);
-int aiPutSign(int difficultyLevel, char board[]);
+void aiGenerateMove(int difficultyLevel, int * field, char board[]);
 
 int main(void)
 {
@@ -60,11 +60,11 @@ void multiplayer(void)
         }
 
         board[field-1] = i % 2 ? 'O' : 'X';
+        printTitle("GAMEBOARD");
 
         /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
         if(i > 3 && anyWinners(board))
         {
-            printTitle("GAMEBOARD");
             printGameboard(board);
             printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
 
@@ -73,7 +73,6 @@ void multiplayer(void)
 
         if(i == 8)
         {
-            printTitle("GAMEBOARD");
             printGameboard(board);
             printf("   |                               IT'S A TIE!                              |\n");
 
@@ -83,7 +82,6 @@ void multiplayer(void)
         /* prepare view for the next iteration */
         int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
 
-        printTitle("GAMEBOARD");
         printf("   |   PLAYER %d it's your turn now, make a move!                            |\n", whoseTurnIsIt);
         printGameboard(board);
     }
@@ -120,7 +118,7 @@ void singleplayer(void)
         int whoseTurnIsIt = (startingPlayer + i) % 2;
 
         /* depending on player ask for sign or run AI */
-        if(whoseTurnIsIt == 1)
+        if(whoseTurnIsIt)
         {
             askForMenuNumber(&field, 9);
 
@@ -130,77 +128,54 @@ void singleplayer(void)
                 i--;
                 continue;
             }
-
-            board[field-1] = i % 2 ? 'O' : 'X';
-
-            /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
-            if(i > 3 && anyWinners(board))
-            {
-                printTitle("GAMEBOARD");
-                printGameboard(board);
-                printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
-
-                playAgain(singleplayer);
-            }
-
-            if(i == 8)
-            {
-                printTitle("GAMEBOARD");
-                printGameboard(board);
-                printf("   |                               IT'S A TIE!                              |\n");
-
-                playAgain(singleplayer);
-            }
-
-            /* prepare view for the next iteration */
-            printTitle("GAMEBOARD");
-            printf("   |   COMPUTER is making a move!                                           |\n");
-            printGameboard(board);
         } else {
-            int field = aiPutSign(difficultyLevel, board);
-            board[field-1] = i % 2 ? 'O' : 'X';
+            aiGenerateMove(difficultyLevel, &field, board);
             printf("   |   Type number: %d                                                       |\n", field);
-
-            /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
-            if(i > 3 && anyWinners(board))
-            {
-                printTitle("GAMEBOARD");
-                printGameboard(board);
-                printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
-
-                playAgain(singleplayer);
-            }
-
-            if(i == 8)
-            {
-                printTitle("GAMEBOARD");
-                printGameboard(board);
-                printf("   |                              IT'S A TIE!                               |\n");
-
-                playAgain(singleplayer);
-            }
-
-            /* prepare view for the next iteration */
-            printTitle("GAMEBOARD");
-            printf("   |   YOUR turn now, make a move!                                          |\n");
-            printGameboard(board);
         }
+
+        board[field-1] = i % 2 ? 'O' : 'X';
+        printTitle("GAMEBOARD");
+
+        /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
+        if(i > 3 && anyWinners(board))
+        {
+            printGameboard(board);
+            printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
+
+            playAgain(singleplayer);
+        }
+
+        if(i == 8)
+        {
+            printGameboard(board);
+            printf("   |                              IT'S A TIE!                               |\n");
+
+            playAgain(singleplayer);
+        }
+
+        /* prepare view for the next iteration */
+        if(whoseTurnIsIt)
+            printf("   |   COMPUTER is making a move!                                           |\n");
+        else
+            printf("   |   YOUR turn now, make a move!                                          |\n");
+
+        printGameboard(board);
     }
 }
 
-int aiPutSign(int difficultyLevel, char board[])
+void aiGenerateMove(int difficultyLevel, int * field, char board[])
 {
     if(difficultyLevel == 1)
     {
-        int field = rand() % 9 + 1; /* use seed from drawing() function */
-        return board[field-1] == ' ' ? field : aiPutSign(difficultyLevel, board);
+        *field = rand() % 9 + 1; /* use seed from drawing() function */
+        if(board[*field-1] != ' ') aiGenerateMove(difficultyLevel, field, board);
     } else if(difficultyLevel == 2)
     {
         //to do
-        return 2;
+        *field = 2;
     } else if(difficultyLevel == 3)
     {
         //to do
-        return 3;
+        *field = 3;
     }
 }

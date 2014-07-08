@@ -24,8 +24,8 @@ void playAgain(void (*mode)(void))
 {
     int menuChoice;
     char playAgainOptions[][OPTION_MAX_LENGTH] = {
-      "1. Yes",
-      "2. No"
+        "1. Yes",
+        "2. No"
     };
     menuSelection(&menuChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
 
