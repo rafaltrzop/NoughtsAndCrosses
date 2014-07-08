@@ -64,3 +64,22 @@ int anyWinners(char boardState[])
 
     return 0;
 }
+
+void checkForEndOfGame(int * i, int * field, char board[], void (*mode)(void))
+{
+    /* 5 symbols or more can cause an end of the game (note that we iterate i from 0) */
+    if(*i > 3 && anyWinners(board))
+    {
+        printGameboard(board);
+        printf("   |                                \"%c\" WINS!                               |\n", board[*field-1]);
+        playAgain(mode);
+    }
+
+    /* if any of the 9 moves didn't end the game with winner then it is a tie */
+    if(*i == 8)
+    {
+        printGameboard(board);
+        printf("   |                              IT'S A TIE!                               |\n");
+        playAgain(mode);
+    }
+}

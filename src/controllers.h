@@ -7,4 +7,5 @@
     void playAgain(void (*mode)(void));
     int drawing(void);
     int anyWinners(char boardState[]);
+    void checkForEndOfGame(int * i, int * field, char board[], void (*mode)(void));
 #endif

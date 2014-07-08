@@ -62,26 +62,10 @@ void multiplayer(void)
         board[field-1] = i % 2 ? 'O' : 'X';
         printTitle("GAMEBOARD");
 
-        /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
-        if(i > 3 && anyWinners(board))
-        {
-            printGameboard(board);
-            printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
-
-            playAgain(multiplayer);
-        }
-
-        if(i == 8)
-        {
-            printGameboard(board);
-            printf("   |                               IT'S A TIE!                              |\n");
-
-            playAgain(multiplayer);
-        }
+        checkForEndOfGame(&i, &field, board, multiplayer);
 
         /* prepare view for the next iteration */
         int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
-
         printf("   |   PLAYER %d it's your turn now, make a move!                            |\n", whoseTurnIsIt);
         printGameboard(board);
     }
@@ -136,22 +120,7 @@ void singleplayer(void)
         board[field-1] = i % 2 ? 'O' : 'X';
         printTitle("GAMEBOARD");
 
-        /* 5 symbols on gameboard can cause an end of the game (note that we iterate i from 0) */
-        if(i > 3 && anyWinners(board))
-        {
-            printGameboard(board);
-            printf("   |                                \"%c\" WINS!                               |\n", board[field-1]);
-
-            playAgain(singleplayer);
-        }
-
-        if(i == 8)
-        {
-            printGameboard(board);
-            printf("   |                              IT'S A TIE!                               |\n");
-
-            playAgain(singleplayer);
-        }
+        checkForEndOfGame(&i, &field, board, singleplayer);
 
         /* prepare view for the next iteration */
         if(whoseTurnIsIt)
