@@ -6,6 +6,6 @@
     void askForMenuNumber(int * choice, int numberOfOptions);
     void playAgain(void (*mode)(void));
     int drawing(void);
-    int anyWinners(char boardState[]);
+    int anyWinners(char board[]);
     void checkForEndOfGame(int * i, int * field, char board[], void (*mode)(void));
 #endif

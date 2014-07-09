@@ -44,22 +44,22 @@ int drawing(void)
     return rand()%101 < 50 ? 1 : 2;
 }
 
-int anyWinners(char boardState[])
+int anyWinners(char board[])
 {
     int i;
 
     /* check every row */
     for(i = 0; i < 7; i += 3)
-        if(boardState[i] != ' ' && boardState[i] == boardState[i+1] && boardState[i] == boardState[i+2])
+        if(board[i] != ' ' && board[i] == board[i+1] && board[i] == board[i+2])
             return 1;
 
     /* check every column */
     for(i = 0; i < 3; i++)
-        if(boardState[i] != ' ' && boardState[i] == boardState[i+3] && boardState[i] == boardState[i+6])
+        if(board[i] != ' ' && board[i] == board[i+3] && board[i] == board[i+6])
             return 1;
 
     /* check diagonals */
-    if(boardState[4] != ' ' && ((boardState[0] == boardState[4] && boardState[0] == boardState[8]) || (boardState[2] == boardState[4] && boardState[2] == boardState[6])))
+    if(board[4] != ' ' && ((board[0] == board[4] && board[0] == board[8]) || (board[2] == board[4] && board[2] == board[6])))
         return 1;
 
     return 0;
