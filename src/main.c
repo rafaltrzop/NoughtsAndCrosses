@@ -134,10 +134,9 @@ void singleplayer(void)
 void aiGenerateMove(int difficultyLevel, int * field, char board[])
 {
     if(difficultyLevel == 1)
-    {
-        *field = rand() % 9 + 1; /* use seed from drawing() function */
-        if(board[*field-1] != ' ') aiGenerateMove(difficultyLevel, field, board);
-    }
+        do {
+            *field = rand() % 9 + 1; /* use seed from drawing() function */
+        } while(board[*field-1] != ' ');
 
     if(difficultyLevel == 2)
     {
