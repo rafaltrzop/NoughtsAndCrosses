@@ -1,6 +1,7 @@
 #include "view.h"
 
 #include <stdio.h>
+#include <unistd.h> /* for sleep() in waitingForMove() */
 #include <string.h> /* for strlen() in printTitle() and printMenuOptions() */
 
 void printLogo(void)
@@ -70,4 +71,16 @@ void printMenuOptions(char options[][OPTION_MAX_LENGTH], int numberOfOptions)
             printf(" ");
         printf("|\n");
     }
+}
+
+void waitingForMove(void)
+{
+    printf("   |   Thinking.                                                            |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+    for(int i = 0; i < 2; i++)
+    {
+        fflush(stdout);
+        sleep(1);
+        printf(".");
+    }
+    printf("\n");
 }

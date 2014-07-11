@@ -82,6 +82,7 @@ void singleplayer(void)
             }
         } else {
             aiGenerateMove(difficultyLevel, &field, board);
+            waitingForMove();
             printf("   |   Type number: %d                                                       |\n", field);
         }
 
