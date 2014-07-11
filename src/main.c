@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "view.h" /* for printLogo() prototype */
-#include "controllers.h" /* for menuSelection() and chooseMode() prototype */
+#include "core.h" /* for menuSelection() and chooseMode() prototype */
 #include "constants.h"
 
 int main(void)

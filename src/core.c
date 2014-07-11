@@ -1,8 +1,8 @@
-#include "controllers.h"
+#include "core.h"
 #include "view.h" /* for prototypes used in menuSelection() */
 #include "game_modes.h" /* for prototypes used in chooseMode() */
 
-#include <stdio.h> /* for printf() */
+#include <stdio.h>
 #include <stdlib.h> /* for exit() in playAgain() and srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
 

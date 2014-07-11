@@ -137,7 +137,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(cantBlock) aiGenerateMove(1, field, board);
     }
 
-    if(difficultyLevel > 2)
+    if(difficultyLevel == 3)
     {
         //to do
     }

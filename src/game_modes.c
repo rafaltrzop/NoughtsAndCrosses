@@ -1,5 +1,5 @@
 #include "game_modes.h"
-#include "controllers.h"
+#include "core.h"
 #include "view.h"
 #include "ai.h" /* for aiGenerateMove() prototype */
 
