@@ -1,4 +1,5 @@
 #include "view.h"
+
 #include <stdio.h>
 #include <string.h> /* for strlen() in printTitle() and printMenuOptions() */
 

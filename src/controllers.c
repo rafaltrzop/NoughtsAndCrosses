@@ -1,6 +1,8 @@
 #include "controllers.h"
 #include "view.h" /* for prototypes used in menuSelection() */
-#include <stdio.h>
+#include "game_modes.h" /* for prototypes used in chooseMode() */
+
+#include <stdio.h> /* for printf() */
 #include <stdlib.h> /* for exit() in playAgain() and srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
 
@@ -18,6 +20,18 @@ void askForMenuNumber(int * choice, int numberOfOptions)
         printf("   |   Type number:                                                         |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
         while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
     } while(*choice < 1 || *choice > numberOfOptions);
+}
+
+void chooseMode(void)
+{
+    int menuChoice;
+    char numberOfPlayersOptions[][OPTION_MAX_LENGTH] = {
+        "1. One player (you vs computer)",
+        "2. Two players (you vs friend)"
+    };
+    menuSelection(&menuChoice, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
+
+    menuChoice == 1 ? singleplayer() : multiplayer();
 }
 
 void playAgain(void (*mode)(void))
