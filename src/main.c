@@ -1,4 +1,4 @@
-#include <stdio.h> /* for printf() */
+#include <stdio.h>
 
 #include "view.h" /* for printLogo() prototype */
 #include "controllers.h" /* for menuSelection() and chooseMode() prototype */
@@ -15,15 +15,11 @@ int main(void)
     };
     menuSelection(&menuChoice, "MAIN MENU", mainMenuOptions, 2);
 
-    switch(menuChoice)
-    {
-        case 1:
-            chooseMode();
-            break;
-        case 2:
-            printf("   |                                                                        |\n"
-                   "   ==========================================================================\n\n");
-            break;
-    }
+    if(menuChoice == 1)
+        chooseMode();
+    else
+        printf("   |                                                                        |\n"
+               "   ==========================================================================\n\n");
+
     return 0;
 }
