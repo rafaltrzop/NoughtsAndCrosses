@@ -8,10 +8,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         do {
             *field = rand() % 9 + 1; /* use seed from drawing() function */
         } while(board[*field-1] != ' ');
-
-    if(difficultyLevel == 2)
-    {
-        int cantBlock = 1;
+    else if(difficultyLevel == 2) {
         int i;
 
         // X X -
@@ -21,8 +18,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
             if(board[i] != ' ' && board[i] == board[i+1] && board[i+2] == ' ')
             {
                 *field = i + 3;
-                cantBlock = 0;
-                break;
+                return;
             }
 
         // - X X
@@ -32,8 +28,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
             if(board[i] != ' ' && board[i] == board[i+1] && board[i-1] == ' ')
             {
                 *field = i;
-                cantBlock = 0;
-                break;
+                return;
             }
 
         // X - X
@@ -43,8 +38,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
             if(board[i] != ' ' && board[i] == board[i+2] && board[i+1] == ' ')
             {
                 *field = i + 2;
-                cantBlock = 0;
-                break;
+                return;
             }
 
         // X Y Z
@@ -54,8 +48,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
             if(board[i] != ' ' && board[i] == board[i+3] && board[i+6] == ' ')
             {
                 *field = i + 7;
-                cantBlock = 0;
-                break;
+                return;
             }
 
         // - - -
@@ -65,8 +58,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
             if(board[i] != ' ' && board[i] == board[i+3] && board[i-3] == ' ')
             {
                 *field = i - 2;
-                cantBlock = 0;
-                break;
+                return;
             }
 
         // X Y Z
@@ -76,8 +68,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
             if(board[i] != ' ' && board[i] == board[i+6] && board[i+3] == ' ')
             {
                 *field = i + 4;
-                cantBlock = 0;
-                break;
+                return;
             }
 
         // X - -
@@ -86,7 +77,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(board[0] != ' ' && board[0] == board[4] && board[8] == ' ')
         {
             *field = 9;
-            cantBlock = 0;
+            return;
         }
 
         // - - -
@@ -95,7 +86,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(board[4] != ' ' && board[4] == board[8] && board[0] == ' ')
         {
             *field = 1;
-            cantBlock = 0;
+            return;
         }
 
         // X - -
@@ -104,7 +95,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(board[0] != ' ' && board[0] == board[8] && board[4] == ' ')
         {
             *field = 5;
-            cantBlock = 0;
+            return;
         }
 
         // - - X
@@ -113,7 +104,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(board[2] != ' ' && board[2] == board[4] && board[6] == ' ')
         {
             *field = 7;
-            cantBlock = 0;
+            return;
         }
 
         // - - -
@@ -122,7 +113,7 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(board[4] != ' ' && board[4] == board[6] && board[2] == ' ')
         {
             *field = 3;
-            cantBlock = 0;
+            return;
         }
 
         // - - X
@@ -131,14 +122,9 @@ void aiGenerateMove(int difficultyLevel, int * field, char board[])
         if(board[2] != ' ' && board[2] == board[6] && board[4] == ' ')
         {
             *field = 5;
-            cantBlock = 0;
+            return;
         }
 
-        if(cantBlock) aiGenerateMove(1, field, board);
-    }
-
-    if(difficultyLevel == 3)
-    {
-        //to do
+        aiGenerateMove(1, field, board);
     }
 }

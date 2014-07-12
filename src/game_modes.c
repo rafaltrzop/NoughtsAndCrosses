@@ -45,10 +45,9 @@ void singleplayer(void)
     int difficultyLevel;
     char difficultyLevelOptions[][OPTION_MAX_LENGTH] = {
         "1. Easy",
-        "2. Normal",
-        "3. Hard"
+        "2. Normal"
     };
-    menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
+    menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 2);
 
     /* decide who starts the game and print instructions */
     int startingPlayer = drawing();
@@ -81,8 +80,8 @@ void singleplayer(void)
                 continue;
             }
         } else {
-            aiGenerateMove(difficultyLevel, &field, board);
             waitingForMove();
+            aiGenerateMove(difficultyLevel, &field, board);
             printf("   |   Type number: %d                                                       |\n", field);
         }
 
