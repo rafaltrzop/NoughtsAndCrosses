@@ -9,9 +9,9 @@ bin/NoughtsAndCrosses.exe: obj/main.o obj/view.o obj/core.o obj/game_modes.o obj
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-obj/main.o: src/view.h src/core.h src/constants.h
-obj/view.o: src/view.h src/constants.h
-obj/core.o: src/core.h src/constants.h src/view.h src/game_modes.h
+obj/main.o: src/view.h src/core.h
+obj/view.o: src/view.h
+obj/core.o: src/core.h src/view.h src/game_modes.h
 obj/game_modes.o: src/game_modes.h src/core.h src/view.h src/ai.h
 obj/ai.o: src/ai.h
 

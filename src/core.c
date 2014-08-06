@@ -6,7 +6,7 @@
 #include <stdlib.h> /* for exit() in playAgain() and srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
 
-void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions)
+void menuSelection(int * choice, char * title, char * options[], int numberOfOptions)
 {
     printTitle(title);
     printMenuOptions(options, numberOfOptions);
@@ -25,7 +25,7 @@ void askForMenuNumber(int * choice, int numberOfOptions)
 void chooseMode(void)
 {
     int menuChoice;
-    char numberOfPlayersOptions[][OPTION_MAX_LENGTH] = {
+    char * numberOfPlayersOptions[] = {
         "1. One player (you vs computer)",
         "2. Two players (you vs friend)"
     };
@@ -37,7 +37,7 @@ void chooseMode(void)
 void playAgain(void (*mode)(void))
 {
     int menuChoice;
-    char playAgainOptions[][OPTION_MAX_LENGTH] = {
+    char * playAgainOptions[] = {
         "1. Yes",
         "2. No"
     };

@@ -43,7 +43,7 @@ void singleplayer(void)
 {
     /* choose difficulty level */
     int difficultyLevel;
-    char difficultyLevelOptions[][OPTION_MAX_LENGTH] = {
+    char * difficultyLevelOptions[] = {
         "1. Easy",
         "2. Normal"
     };

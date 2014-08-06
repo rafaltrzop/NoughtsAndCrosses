@@ -1,8 +1,7 @@
 #ifndef CORE_H
     #define CORE_H
-    #include "constants.h"
 
-    void menuSelection(int * choice, char * title, char options[][OPTION_MAX_LENGTH], int numberOfOptions);
+    void menuSelection(int * choice, char * title, char * options[], int numberOfOptions);
     void askForMenuNumber(int * choice, int numberOfOptions);
     void chooseMode(void);
     void playAgain(void (*mode)(void));

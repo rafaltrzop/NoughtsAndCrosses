@@ -2,14 +2,13 @@
 
 #include "view.h" /* for printLogo() prototype */
 #include "core.h" /* for menuSelection() and chooseMode() prototype */
-#include "constants.h"
 
 int main(void)
 {
     printLogo();
 
     int menuChoice;
-    char mainMenuOptions[][OPTION_MAX_LENGTH] = {
+    char * mainMenuOptions[] = {
         "1. Play",
         "2. Quit"
     };

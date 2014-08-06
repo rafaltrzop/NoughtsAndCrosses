@@ -62,7 +62,7 @@ void printTitle(char title[])
            "   |                                                                        |\n");
 }
 
-void printMenuOptions(char options[][OPTION_MAX_LENGTH], int numberOfOptions)
+void printMenuOptions(char * options[], int numberOfOptions)
 {
     for(int i = 0; i < numberOfOptions; i++)
     {
