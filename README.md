@@ -16,6 +16,11 @@ Compilation
 Just use attached Makefile and type in console `make all` or in short `make`.
 To get rid of object files and executable file type `make clean`.
 
+To do
+=====
+
+Add unbeatable hard difficulty level (you can lose or tie only). Implement it with [minimax](http://en.wikipedia.org/wiki/Minimax) or even better [alpha–beta pruning](http://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) algorithm.
+
 Example of gameplay
 ===================
 
