@@ -7,8 +7,8 @@ Game features
 =============
 
 * Singleplayer mode (you vs computer) with 2 difficulty levels
-* Multiplayer mode (play against your friend)
-* Stunning console like graphics
+* Multiplayer mode (play against your friend sitting next to you)
+* Stunning console-like graphics
 
 Compilation
 ===========
