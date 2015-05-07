@@ -7,94 +7,99 @@
 
 void multiplayer(void)
 {
-    int startingPlayer = drawing();
+  int startingPlayer = drawing();
 
-    printTitle("INSTRUCTIONS");
-    printf("   |   Let's flip a coin:                                                   |\n"
-           "   |   PLAYER %d starts the game!                                            |\n", startingPlayer);
-    printGameboard("123456789");
+  printTitle("INSTRUCTIONS");
+  printf("   |   Let's flip a coin:                                                   |\n"
+         "   |   PLAYER %d starts the game!                                            |\n", startingPlayer);
+  printGameboard("123456789");
 
-    int field;
+  int field;
     char board[9] = "         "; /* nine spaces, one for each field */
 
-    for(int i = 0; 1; i++)
+  for(int i = 0; 1; i++)
+  {
+    askForMenuNumber(&field, 9);
+
+    /* ask for symbol again if given field is not empty */
+    if(board[field-1] != ' ')
     {
-        askForMenuNumber(&field, 9);
-
-        /* ask for symbol again if given field is not empty */
-        if(board[field-1] != ' ')
-        {
-            i--;
-            continue;
-        }
-
-        board[field-1] = i % 2 ? 'O' : 'X';
-        printTitle("GAMEBOARD");
-        checkForEndOfGame(&i, &field, board, multiplayer);
-
-        /* prepare view for the next iteration */
-        int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
-        printf("   |   PLAYER %d it's your turn now, make a move!                            |\n", whoseTurnIsIt);
-        printGameboard(board);
+      i--;
+      continue;
     }
+
+    board[field-1] = i % 2 ? 'O' : 'X';
+    printTitle("GAMEBOARD");
+    checkForEndOfGame(&i, &field, board, multiplayer);
+
+    /* prepare view for the next iteration */
+    int whoseTurnIsIt = (startingPlayer + i) % 2 + 1;
+    printf("   |   PLAYER %d it's your turn now, make a move!                            |\n", whoseTurnIsIt);
+    printGameboard(board);
+  }
 }
 
 void singleplayer(void)
 {
-    /* choose difficulty level */
-    int difficultyLevel;
-    char * difficultyLevelOptions[] = {
-        "1. Easy",
-        "2. Normal"
-    };
-    menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 2);
+  /* choose difficulty level */
+  int difficultyLevel;
+  char * difficultyLevelOptions[] = {
+    "1. Easy",
+    "2. Normal",
+    "3. Hard"
+  };
+  menuSelection(&difficultyLevel, "DIFFICULTY LEVEL", difficultyLevelOptions, 3);
 
-    /* decide who starts the game and print instructions */
-    int startingPlayer = drawing();
-    char player[2][78] = {
-        "   |   YOU start the game!                                                  |",
-        "   |   COMPUTER starts the game!                                            |"
-    };
+  /* decide who starts the game and print instructions */
+  int startingPlayer = drawing();
+  char player[2][78] = {
+    "   |   YOU start the game!                                                  |",
+    "   |   COMPUTER starts the game!                                            |"
+  };
 
-    printTitle("INSTRUCTIONS");
-    printf("   |   Let's flip a coin:                                                   |\n"
-           "%s\n", player[startingPlayer-1]);
-    printGameboard("123456789");
+  printTitle("INSTRUCTIONS");
+  printf("   |   Let's flip a coin:                                                   |\n"
+         "%s\n", player[startingPlayer-1]);
+  printGameboard("123456789");
 
-    int field;
+  int field;
     char board[9] = "         "; /* nine spaces, one for each field */
 
-    for(int i = 0; 1; i++)
+  for(int i = 0; 1; i++)
+  {
+    int human = (startingPlayer + i) % 2;
+
+    /* depending on player ask for sign or run AI */
+    if(human)
     {
-        int human = (startingPlayer + i) % 2;
+      askForMenuNumber(&field, 9);
 
-        /* depending on player ask for sign or run AI */
-        if(human)
-        {
-            askForMenuNumber(&field, 9);
-
-            /* ask for symbol again if given field is not empty */
-            if(board[field-1] != ' ')
-            {
-                i--;
-                continue;
-            }
-        } else {
-            waitingForMove();
-            aiGenerateMove(difficultyLevel, &field, board);
-            printf("   |   Type number: %d                                                       |\n", field);
-        }
-
-        board[field-1] = i % 2 ? 'O' : 'X';
-        printTitle("GAMEBOARD");
-        checkForEndOfGame(&i, &field, board, singleplayer);
-
-        /* prepare view for the next iteration */
-        if(human)
-            printf("   |   COMPUTER is making a move!                                           |\n");
-        else
-            printf("   |   YOUR turn now, make a move!                                          |\n");
-
-        printGameboard(board);
+      /* ask for symbol again if given field is not empty */
+      if(board[field-1] != ' ')
+      {
+        i--;
+        continue;
+      }
+    } else {
+      waitingForMove();
+      aiGenerateMove(difficultyLevel, &field, board);
+      printf("   |   Type number: %d                                                       |\n", field);
     }
+
+    if(difficultyLevel == 3 && startingPlayer == 1)
+      board[field-1] = i % 2 ? 'X' : 'O'; /* you play as a O on hard level because minimax is always X */
+    else
+      board[field-1] = i % 2 ? 'O' : 'X';
+
+    printTitle("GAMEBOARD");
+    checkForEndOfGame(&i, &field, board, singleplayer);
+
+    /* prepare view for the next iteration */
+    if(human)
+      printf("   |   COMPUTER is making a move!                                           |\n");
+    else
+      printf("   |   YOUR turn now, make a move!                                          |\n");
+
+    printGameboard(board);
+  }
 }

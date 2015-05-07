@@ -5,20 +5,20 @@
 
 int main(void)
 {
-    printLogo();
+  printLogo();
 
-    int menuChoice;
-    char * mainMenuOptions[] = {
-        "1. Play",
-        "2. Quit"
-    };
-    menuSelection(&menuChoice, "MAIN MENU", mainMenuOptions, 2);
+  int menuChoice;
+  char * mainMenuOptions[] = {
+    "1. Play",
+    "2. Quit"
+  };
+  menuSelection(&menuChoice, "MAIN MENU", mainMenuOptions, 2);
 
-    if(menuChoice == 1)
-        chooseMode();
-    else
-        printf("   |                                                                        |\n"
-               "   ==========================================================================\n\n");
+  if(menuChoice == 1)
+    chooseMode();
+  else
+    printf("   |                                                                        |\n"
+           "   ==========================================================================\n\n");
 
-    return 0;
+  return 0;
 }

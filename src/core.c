@@ -9,54 +9,54 @@
 
 void menuSelection(int * choice, char * title, char * options[], int numberOfOptions)
 {
-    printTitle(title);
-    printMenuOptions(options, numberOfOptions);
-    printf("   |                                                                        |\n");
-    askForMenuNumber(choice, numberOfOptions);
+  printTitle(title);
+  printMenuOptions(options, numberOfOptions);
+  printf("   |                                                                        |\n");
+  askForMenuNumber(choice, numberOfOptions);
 }
 
 void askForMenuNumber(int * choice, int numberOfOptions)
 {
-    do {
-        printf("   |   Type number:                                                         |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
-        while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
-    } while(*choice < 1 || *choice > numberOfOptions);
+  do {
+    printf("   |   Type number:                                                         |\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b");
+    while(!scanf("%d", choice)) getchar(); /* in case you type some letters */
+  } while(*choice < 1 || *choice > numberOfOptions);
 }
 
 void chooseMode(void)
 {
-    int menuChoice;
-    char * numberOfPlayersOptions[] = {
-        "1. One player (you vs computer)",
-        "2. Two players (you vs friend)"
-    };
-    menuSelection(&menuChoice, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
+  int menuChoice;
+  char * numberOfPlayersOptions[] = {
+    "1. One player (you vs computer)",
+    "2. Two players (you vs friend)"
+  };
+  menuSelection(&menuChoice, "NUMBER OF PLAYERS", numberOfPlayersOptions, 2);
 
-    menuChoice == 1 ? singleplayer() : multiplayer();
+  menuChoice == 1 ? singleplayer() : multiplayer();
 }
 
 void playAgain(void (*mode)(void))
 {
-    int menuChoice;
-    char * playAgainOptions[] = {
-        "1. Yes",
-        "2. No"
-    };
-    menuSelection(&menuChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
+  int menuChoice;
+  char * playAgainOptions[] = {
+    "1. Yes",
+    "2. No"
+  };
+  menuSelection(&menuChoice, "DO YOU WANT TO PLAY AGAIN?", playAgainOptions, 2);
 
-    if(menuChoice == 1)
-        mode();
-    else
-        printf("   |                                                                        |\n"
-               "   ==========================================================================\n\n");
+  if(menuChoice == 1)
+    mode();
+  else
+    printf("   |                                                                        |\n"
+           "   ==========================================================================\n\n");
 
-    exit(EXIT_SUCCESS);
+  exit(EXIT_SUCCESS);
 }
 
 int drawing(void)
 {
-    srand(time(NULL));
-    return rand()%101 < 50 ? 1 : 2;
+  srand(time(NULL));
+  return rand()%101 < 50 ? 1 : 2;
 }
 
 int fullBoard(char board[])
@@ -72,11 +72,11 @@ int whoWon(char ch)
   switch(ch)
   {
     case 'O':
-      return -1;
-      break;
+    return -1;
+    break;
     case 'X':
-      return 1;
-      break;
+    return 1;
+    break;
   }
 }
 
@@ -103,16 +103,16 @@ int anyWinners(char board[])
 
 void checkForEndOfGame(int * i, int * field, char board[], void (*mode)(void))
 {
-    // 5 symbols or more can cause an end of the game (note that we iterate i from 0)
-    // if any of the 9 moves didn't end the game with winner then it is a tie
-    if(*i > 3 && anyWinners(board))
-    {
-        printGameboard(board);
-        printf("   |                                \"%c\" WINS!                               |\n", board[*field-1]);
-        playAgain(mode);
-    } else if(*i == 8) {
-        printGameboard(board);
-        printf("   |                              IT'S A TIE!                               |\n");
-        playAgain(mode);
-    }
+  // 5 symbols or more can cause an end of the game (note that we iterate i from 0)
+  // if any of the 9 moves didn't end the game with winner then it is a tie
+  if(*i > 3 && anyWinners(board))
+  {
+    printGameboard(board);
+    printf("   |                                \"%c\" WINS!                               |\n", board[*field-1]);
+    playAgain(mode);
+  } else if(*i == 8) {
+    printGameboard(board);
+    printf("   |                              IT'S A TIE!                               |\n");
+    playAgain(mode);
+  }
 }
