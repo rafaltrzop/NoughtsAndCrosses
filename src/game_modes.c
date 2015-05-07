@@ -66,10 +66,10 @@ void singleplayer(void)
 
     for(int i = 0; 1; i++)
     {
-        int whoseTurnIsIt = (startingPlayer + i) % 2;
+        int human = (startingPlayer + i) % 2;
 
         /* depending on player ask for sign or run AI */
-        if(whoseTurnIsIt)
+        if(human)
         {
             askForMenuNumber(&field, 9);
 
@@ -87,11 +87,10 @@ void singleplayer(void)
 
         board[field-1] = i % 2 ? 'O' : 'X';
         printTitle("GAMEBOARD");
-
         checkForEndOfGame(&i, &field, board, singleplayer);
 
         /* prepare view for the next iteration */
-        if(whoseTurnIsIt)
+        if(human)
             printf("   |   COMPUTER is making a move!                                           |\n");
         else
             printf("   |   YOUR turn now, make a move!                                          |\n");
