@@ -1,6 +1,53 @@
 #include "ai.h"
+#include "core.h" /* for prototypes used in minimax() */
 
 #include <stdlib.h>
+#include <string.h> /* for memcpy() in minimax() */
+#include <stdbool.h> /* for boolean data type in minimax() */
+
+int minimax(char node[], int depth, bool maximizingPlayer, int * move)
+{
+  int gameResult = anyWinners(node);
+  if(depth == 0 || gameResult || fullBoard(node)) /* depth == 0 or node is a terminal node */
+    return gameResult * (depth+1);
+
+  int bestValue, val;
+  if (maximizingPlayer)
+  {
+    bestValue = -11;
+    for(int i = 0; i < 9; i++)
+    {
+      if(node[i] == ' ')
+      {
+        char child[9];
+        memcpy(child, node, 9 * sizeof(char));
+        child[i] = 'X';
+
+        val = minimax(child, depth - 1, false, move);
+        if(val > bestValue)
+        {
+          bestValue = val;
+          if(depth == 9) *move = i;
+        }
+      }
+    }
+    return bestValue;
+  } else {
+    bestValue = 11;
+    for(int i = 0; i < 9; i++) {
+      if(node[i] == ' ')
+      {
+        char child[9];
+        memcpy(child, node, 9 * sizeof(char));
+        child[i] = 'O';
+
+        val = minimax(child, depth - 1, true, move);
+        bestValue = bestValue < val ? bestValue : val;
+      }
+    }
+    return bestValue;
+  }
+}
 
 void aiGenerateMove(int difficultyLevel, int * field, char board[])
 {

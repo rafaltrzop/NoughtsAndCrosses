@@ -6,6 +6,8 @@
     void chooseMode(void);
     void playAgain(void (*mode)(void));
     int drawing(void);
+    int fullBoard(char board[]);
+    int whoWon(char ch);
     int anyWinners(char board[]);
     void checkForEndOfGame(int * i, int * field, char board[], void (*mode)(void));
 #endif

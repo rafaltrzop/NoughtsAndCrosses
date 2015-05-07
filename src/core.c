@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h> /* for exit() in playAgain() and srand() in drawing() */
 #include <time.h> /* for time() in drawing() */
+#include <stdbool.h> /* for boolean data type in fullBoard() */
 
 void menuSelection(int * choice, char * title, char * options[], int numberOfOptions)
 {
@@ -58,25 +59,46 @@ int drawing(void)
     return rand()%101 < 50 ? 1 : 2;
 }
 
+int fullBoard(char board[])
+{
+  for(int i = 0; i < 9; i++)
+    if(board[i] == ' ') return false;
+
+  return true;
+}
+
+int whoWon(char ch)
+{
+  switch(ch)
+  {
+    case 'O':
+      return -1;
+      break;
+    case 'X':
+      return 1;
+      break;
+  }
+}
+
 int anyWinners(char board[])
 {
-    int i;
+  int i;
 
-    /* check every row */
-    for(i = 0; i < 7; i += 3)
-        if(board[i] != ' ' && board[i] == board[i+1] && board[i] == board[i+2])
-            return 1;
+  /* check every row */
+  for(i = 0; i < 7; i += 3)
+    if(board[i] != ' ' && board[i] == board[i+1] && board[i] == board[i+2])
+      return whoWon(board[i]);
 
-    /* check every column */
-    for(i = 0; i < 3; i++)
-        if(board[i] != ' ' && board[i] == board[i+3] && board[i] == board[i+6])
-            return 1;
+  /* check every column */
+  for(i = 0; i < 3; i++)
+    if(board[i] != ' ' && board[i] == board[i+3] && board[i] == board[i+6])
+      return whoWon(board[i]);
 
-    /* check diagonals */
-    if(board[4] != ' ' && ((board[0] == board[4] && board[0] == board[8]) || (board[2] == board[4] && board[2] == board[6])))
-        return 1;
+  /* check diagonals */
+  if(board[4] != ' ' && ((board[0] == board[4] && board[0] == board[8]) || (board[2] == board[4] && board[2] == board[6])))
+    return whoWon(board[4]);
 
-    return 0;
+  return 0;
 }
 
 void checkForEndOfGame(int * i, int * field, char board[], void (*mode)(void))
