@@ -6,8 +6,9 @@ Noughts and Crosses also known as [Tic-tac-toe](http://en.wikipedia.org/wiki/Tic
 Game features
 =============
 
-* Singleplayer mode (you vs computer) with 2 difficulty levels
+* Singleplayer mode (you vs computer) with 3 difficulty levels
 * Multiplayer mode (play against your friend sitting next to you)
+* Minimax algorithm (on hard difficulty level)
 * Stunning console-like graphics
 
 Compilation
@@ -15,11 +16,6 @@ Compilation
 
 Just use attached Makefile and type in console `make all` or in short `make`.
 To get rid of object files and executable file type `make clean`.
-
-To do
-=====
-
-Add unbeatable hard difficulty level (you can lose or tie only). Implement it with [minimax](http://en.wikipedia.org/wiki/Minimax) or even better [alpha–beta pruning](http://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) algorithm.
 
 Example of gameplay
 ===================
@@ -75,6 +71,7 @@ Example of gameplay
 |                                                                        |
 |   1. Easy                                                              |
 |   2. Normal                                                            |
+|   3. Hard                                                              |
 |                                                                        |
 |   Type number: 2                                                       |
 |                                                                        |
